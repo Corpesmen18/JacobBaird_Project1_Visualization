@@ -16,6 +16,8 @@ class HUD {
     // sandbox menu right buttons
     Button shape = new Button(width - 75, 35, "New Shape", false, false, true, false);
     buttons.add(shape);
+    Button child = new Button(width - 75, 95, "New Child", false, false, true, false);
+    buttons.add(child);
     
   }
   

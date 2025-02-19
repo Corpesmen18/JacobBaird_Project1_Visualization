@@ -3,6 +3,8 @@ SceneTitle sceneTitle;
 SceneSandbox sceneSandbox;
 SceneTeach sceneTeach;
 
+Shape selected;
+
 void setup() {
   size(1280, 720);
   background(128);

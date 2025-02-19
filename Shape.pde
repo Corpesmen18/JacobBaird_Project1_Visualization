@@ -1,6 +1,8 @@
 class Shape {
   float x, y, w, h, r, g, b;
   String shape;
+  boolean isHovered, isClicked = false, wasClicked = false;
+  AABB aabb;
   
   Shape (float x, float y, float w, float h, float r, float g, float b, String shape){
     this.x = x;
@@ -11,9 +13,12 @@ class Shape {
     this.g = g;
     this.b = b;
     this.shape = shape;
+    aabb = new AABB(x, y, w, h);
   }
   
   void update(){
+    
+    
     
   }
   
@@ -36,6 +41,33 @@ class Shape {
       
     }
     
+  }
+  
+}
+
+class AABB {
+  
+  private boolean colliding = false;
+  private float xmin, xmax, ymin, ymax;
+  
+  AABB(float x, float y, float w, float h){
+    xmin = x - w;
+    xmax = x + w;
+    ymin = y - h;
+    ymax = y + h;
+  }
+  
+  public void resetColliding(){
+    colliding = false;
+  }
+  
+  public boolean checkCollision(){
+    if (xmax < mouseX) return false;
+    if (xmin > mouseX) return false;
+    if (ymax < mouseY) return false;
+    if (ymin > mouseY) return false;
+    colliding = true; 
+    return true;
   }
   
 }
