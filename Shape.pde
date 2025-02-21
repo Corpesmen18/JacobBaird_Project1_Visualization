@@ -36,7 +36,7 @@ class Shape {
         break;
       case "TRIANGLE":
         fill(r, g, b);
-        triangle(x - w, y + h, x + w, y + h, x, y - h);
+        triangle(x - w/2, y + h/2, x + w/2, y + h/2, x, y - h/2);
         break;
       
     }

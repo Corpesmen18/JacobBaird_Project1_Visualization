@@ -1,9 +1,10 @@
 class SceneSandbox {
   
   ArrayList<Shape> shapes = new ArrayList();
+  String lastAction = "default";
   
   HUD hud = new HUD();
-  Textbox text = new Textbox(width/2, height - 75, 1280, 150, 16, " ");
+  Textbox text = new Textbox(width/2, height - 75, 1280, 150, 20, " ");
   Textbox left = new Textbox(75, height/2 - 75, 150, 570, 16, " ");
   Textbox right = new Textbox(width - 75, height/2 - 75, 150, 570, 16, " ");
   
@@ -13,6 +14,14 @@ class SceneSandbox {
     for(int i = 0; i < shapes.size(); i++){
       Shape s = shapes.get(i);
       s.update();
+    }
+    
+    switch (lastAction) {
+       case "default":
+         text.text = "Interact with the shapes and buttons to learn more about inheritance and polymorphism!";
+         break;
+      
+      
     }
     
   }

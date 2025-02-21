@@ -1,6 +1,8 @@
 class HUD {
   
   ArrayList<Button> buttons = new ArrayList();
+  String extend = "default";
+  Shape s;
   
   HUD() {
     
@@ -18,6 +20,24 @@ class HUD {
     buttons.add(shape);
     Button child = new Button(width - 75, 95, "New Child", false, false, true, false);
     buttons.add(child);
+    Button container = new Button(width - 75, 155, "New Container", false, false, true, false);
+    buttons.add(container);
+    //snadbox new shapes
+    Button square = new Button(width - 225, 35, "Square", false, false, true, false);
+    shape.buttons.add(square);
+    Button circle = new Button(width - 225, 95, "Circle", false, false, true, false);
+    shape.buttons.add(circle);
+    Button triangle = new Button(width - 225, 155, "Triangle", false, false, true, false);
+    shape.buttons.add(triangle);
+    
+    
+    // sandbox menu left buttons
+    Button cShape = new Button(75, 35, "Change Shape", false, false, true, false);
+    buttons.add(cShape);
+    Button cColor = new Button(75, 95, "Change Color", false, false, true, false);
+    buttons.add(cColor);
+    Button cFunction = new Button(75, 155, "Change\nFunction", false, false, true, false);
+    buttons.add(cFunction);
     
   }
   
@@ -47,34 +67,81 @@ class HUD {
         switch(b.buttonName){
           case "SANDBOX":
             if(b.isVisible){
-              
+              extend = "default";
               switchToSandbox();
             }
             break;
           case "TEACH":
             if(b.isVisible){
+              extend = "default";
               switchToTeach();
             }
             break;
           case "NEXT":
             if(b.isVisible){
+              extend = "default";
               sceneTeach.Progress();
             }
             break;
           case "MENU":
             if(b.isVisible){
+              extend = "default";
               switchToTitle();
             }
             break;
           case "New Shape":
             if (b.isVisible){
-              Shape s = new Shape(width/2, height/2, 50, 50, 255, 0, 0, "TRIANGLE");
-              sceneSandbox.shapes.add(s);
+              extend = "New Shape";
+            }
+            break;
+          case "New Child":
+            if (b.isVisible){
+              extend = "New Child";
+            }
+            break;
+          case "New Container":
+            if (b.isVisible){
+              extend = "New Container";
             }
             break;
         }
       }
+      if (b.buttonName == extend){
+        for (Button e : b.buttons){
+          e.isVisible = true;
+          e.update();
+          
+          if (e.isClicked()){
+            switch(e.buttonName){
+              
+              case "Square":
+                extend = "deafault";
+                s = new Shape(width/2, height/2, 50, 50, 0, 0, 255, "SQUARE");
+                sceneSandbox.shapes.add(s);
+                break;
+              case "Circle":
+                extend = "deafault";
+                s = new Shape(width/2, height/2, 50, 50, 255, 0, 0, "CIRCLE");
+                sceneSandbox.shapes.add(s);
+                break;
+              case "Triangle":
+                extend = "deafault";
+                s = new Shape(width/2, height/2, 50, 50, 0, 255, 0, "TRIANGLE");
+                sceneSandbox.shapes.add(s);
+                break;
+              
+            }
+          }
+        }
+      } else {
+        for (Button e : b.buttons){
+          e.isVisible = false;
+        }
+      }
     }
+    
+    
+    
   }
   
   void draw(){
@@ -82,6 +149,11 @@ class HUD {
     for (int i = 0; i < buttons.size(); i++) {
       Button b = buttons.get(i);
       b.draw();
+      if (b.buttonName == extend){
+        for (Button e : b.buttons){
+           e.draw();
+        }
+      }
     }
     
   }
@@ -100,6 +172,8 @@ class Button {
   boolean isHovered;
   boolean isClicked = false;
   boolean wasClicked = false;
+  
+  ArrayList<Button> buttons = new ArrayList();
   
   Button(float x, float y, String name, boolean isVisible, boolean title, boolean sand, boolean teach) {
     this.x = x;
@@ -178,7 +252,7 @@ class Textbox {
     fill(0);
     textAlign(LEFT, LEFT);
     textSize(textSize);
-    text(text, x - w/2 + 5, y - h/2 + 18);
+    text(text, x - w/2 + 6, y - h/2 + 20);
     stroke(0);
   }
   
