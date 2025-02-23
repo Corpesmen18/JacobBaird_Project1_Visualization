@@ -2,6 +2,8 @@ class SceneSandbox {
   
   ArrayList<Shape> shapes = new ArrayList();
   String lastAction = "default";
+  boolean debug = false;
+  Shape dragging;
   
   HUD hud = new HUD();
   Textbox text = new Textbox(width/2, height - 75, 1280, 150, 20, " ");
@@ -14,6 +16,11 @@ class SceneSandbox {
     for(int i = 0; i < shapes.size(); i++){
       Shape s = shapes.get(i);
       s.update();
+    }
+    
+    if(dragging != null){
+      dragging.x = mouseX;
+      dragging.y = mouseY;
     }
     
     switch (lastAction) {

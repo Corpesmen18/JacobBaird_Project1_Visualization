@@ -23,7 +23,7 @@ void draw(){
     sceneTeach.update();
     if (sceneTeach != null) sceneTeach.draw();
   }
-  
+  Mouse.update();
 }
 
 void keyPressed() {

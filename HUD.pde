@@ -12,8 +12,10 @@ class HUD {
     buttons.add(teach);
     Button next = new Button(width - 100, height - 250, "NEXT", false, false, false, true);
     buttons.add(next);
-    Button title = new Button(220, 35, "MENU", false, false, true, true);
+    Button title = new Button(225, 35, "MENU", false, false, true, true);
     buttons.add(title);
+    Button debug = new Button(width - 225, height - 190, "DEBUG", false, false, true, false);
+    buttons.add(debug);
     
     // sandbox menu right buttons
     Button shape = new Button(width - 75, 35, "New Shape", false, false, true, false);
@@ -38,6 +40,20 @@ class HUD {
     buttons.add(cColor);
     Button cFunction = new Button(75, 155, "Change\nFunction", false, false, true, false);
     buttons.add(cFunction);
+    // sandbox change shape
+    Button toSquare = new Button(225, 95, "To Square", false, false, true, false);
+    cShape.buttons.add(toSquare);
+    Button toCircle = new Button(225, 155, "To Circle", false, false, true, false);
+    cShape.buttons.add(toCircle);
+    Button toTriangle = new Button(225, 215, "To Triangle", false, false, true, false);
+    cShape.buttons.add(toTriangle);
+    // sandbox change color
+    Button red = new Button(225, 95, "Red", false, false, true, false);
+    cColor.buttons.add(red);
+    Button blue = new Button(225, 155, "Blue", false, false, true, false);
+    cColor.buttons.add(blue);
+    Button green = new Button(225, 215, "Green", false, false, true, false);
+    cColor.buttons.add(green);
     
   }
   
@@ -89,19 +105,28 @@ class HUD {
               switchToTitle();
             }
             break;
-          case "New Shape":
-            if (b.isVisible){
-              extend = "New Shape";
+          case "DEBUG":
+            if(b.isVisible){
+              extend = "default";
+              sceneSandbox.debug = !sceneSandbox.debug;
             }
             break;
           case "New Child":
             if (b.isVisible){
-              extend = "New Child";
+              extend = "default";
+              if(selected != null){
+                s = new Shape(mouseX, mouseY, selected.w, selected.h, selected.r, selected.g, selected.b, selected.shape);
+                sceneSandbox.dragging = s;
+                selected.children.add(s);
+              }
             }
             break;
           case "New Container":
+          case "New Shape":
+          case "Change Color":
+          case "Change Shape":
             if (b.isVisible){
-              extend = "New Container";
+              extend = b.buttonName;
             }
             break;
         }
@@ -115,19 +140,58 @@ class HUD {
             switch(e.buttonName){
               
               case "Square":
-                extend = "deafault";
+                extend = "default";
                 s = new Shape(width/2, height/2, 50, 50, 0, 0, 255, "SQUARE");
+                sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Circle":
-                extend = "deafault";
+                extend = "default";
                 s = new Shape(width/2, height/2, 50, 50, 255, 0, 0, "CIRCLE");
+                sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Triangle":
-                extend = "deafault";
+                extend = "default";
                 s = new Shape(width/2, height/2, 50, 50, 0, 255, 0, "TRIANGLE");
+                sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
+                break;
+              case "To Square":
+                extend = "default";
+                if(selected != null){
+                  selected.changeShape("SQUARE");
+                }
+                break;
+              case "To Circle":
+                extend = "default";
+                if(selected != null){
+                  selected.changeShape("CIRCLE");
+                }
+                break;
+              case "To Triangle":
+                extend = "default";
+                if(selected != null){
+                  selected.changeShape("TRIANGLE");
+                }
+                break;
+              case "Red":
+                extend = "default";
+                if(selected != null){
+                  selected.changeColor(255, 0, 0);
+                }
+                break;
+              case "Blue":
+                extend = "default";
+                if(selected != null){
+                  selected.changeColor(0, 0, 255);
+                }
+                break;
+              case "Green":
+                extend = "default";
+                if(selected != null){
+                  selected.changeColor(0, 255, 0);
+                }
                 break;
               
             }
