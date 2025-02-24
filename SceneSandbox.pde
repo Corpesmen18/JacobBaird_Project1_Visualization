@@ -34,8 +34,14 @@ class SceneSandbox {
     }
     
     if(drag != null){
+      drag.px = drag.x;
+      drag.py = drag.y;
       drag.x = mouseX;
       drag.y = mouseY;
+      for(Shape s : drag.shapes){
+        s.x += drag.x - drag.px;
+        s.y += drag.y - drag.py;
+      }
     }
     
     if(drawing){

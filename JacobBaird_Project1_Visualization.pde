@@ -4,6 +4,8 @@ SceneSandbox sceneSandbox;
 SceneTeach sceneTeach;
 
 Shape selected;
+float dt;
+float prevTime;
 
 void setup() {
   size(1280, 720);
@@ -12,6 +14,7 @@ void setup() {
 }
 
 void draw(){
+  calcDeltaTime();
   
   if (sceneTitle != null){
     sceneTitle.update();
@@ -68,4 +71,10 @@ void switchToTeach(){
   sceneTitle = null;
   sceneSandbox = null;
   sceneTeach = new SceneTeach();
+}
+
+void calcDeltaTime() {
+  float currTime = millis();
+  dt = (currTime - prevTime) / 1000.0;
+  prevTime = currTime;
 }

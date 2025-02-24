@@ -27,6 +27,11 @@ class Shape {
     aabb.recalc(x, y, w, h);
     function();
     
+    //for(Shape s : sceneSandbox.shapes){
+    //  if (aabb.checkCollision(s.aabb) && s != this){
+    //    println("hitting");
+    //  }
+    //}
     
     if(Mouse.onUp(Mouse.LEFT)){
       sceneSandbox.dragging = null;
@@ -37,14 +42,17 @@ class Shape {
       sceneSandbox.dragging = this;
     }
     
-    for (Shape s : children){
-      s.update();
+    //for (Shape s : children){
+    //  s.update();
+    //}
+    
+    if (selected != null){
+      if(selected == this){
+        highlight(true);
+      } else if (!selected.isChild(this)){
+        highlight = false;
+      }
     }
-    
-    if(selected == this){
-      highlight(true);
-    } else highlight = false;
-    
     
     
   }
@@ -56,7 +64,7 @@ class Shape {
         stroke(r, g, b);
         line(x, y, s.x, s.y);
       }
-      s.draw();
+      //s.draw();
     }
     
     stroke(0);
@@ -151,6 +159,13 @@ class Shape {
     return false;
   }
   
+  void repel(float x, float y){
+    x = x - this.x;
+    y = y - this.y;
+    this.x -= x * dt;
+    this.y -= y * dt;
+  }
+  
 }
 
 class AABB {
@@ -185,11 +200,20 @@ class AABB {
     return true;
   }
   
+  public boolean checkCollision(AABB other){
+    if(xmax < other.xmin) return false;
+    if(xmin > other.xmax) return false;
+    if(ymax < other.ymin) return false;
+    if(ymin > other.ymax) return false;
+    return true;
+  }
+  
 }
 
 class Container {
   ArrayList<Shape> shapes = new ArrayList();
   float x, y, w, h;
+  float px, py;
   Shape target;
   AABB aabb;
   
@@ -222,9 +246,35 @@ class Container {
   
   void update(){
     
+    aabb.recalc(x, y, w, h);
+    println(shapes.size());
+    println(target);
+    
+    for(Shape s : sceneSandbox.shapes){
+      if(aabb.checkCollision(s.aabb)){
+        if(!isContained(s)){
+          if (target == null){
+            if(Mouse.onUp(Mouse.LEFT)){
+              target = s;
+              shapes.add(s);
+            }
+          } else if (target.isChild(s) && Mouse.onUp(Mouse.LEFT)){
+              shapes.add(s);
+            } else s.repel(x, y);
+          }
+        } //else s.repel(x, y);
+      }    
+    
     if(aabb.checkCollision()){
       if(Mouse.onDown(Mouse.RIGHT)){
         sceneSandbox.drag = this;
+      }
+      if (Mouse.onDown(Mouse.LEFT) && shapes.size() > 0){
+        sceneSandbox.dragging = shapes.get(shapes.size() - 1);
+        shapes.remove(shapes.size() - 1);
+        if(shapes.size() == 0){
+          target = null;
+        }
       }
     }
     
@@ -238,6 +288,15 @@ class Container {
     noFill();
     stroke(0);
     rect(x - w/2, y - h/2, w, h);
+  }
+  
+  boolean isContained(Shape s){
+    for(Shape b : shapes){
+      if(s == b){
+        return true;
+      }
+    }
+    return false;
   }
   
 }

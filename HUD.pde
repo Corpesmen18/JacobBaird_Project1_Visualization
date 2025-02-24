@@ -125,6 +125,7 @@ class HUD {
                 s = new Shape(mouseX, mouseY, selected.w, selected.h, selected.r, selected.g, selected.b, selected.shape, selected.func);
                 sceneSandbox.dragging = s;
                 selected.children.add(s);
+                sceneSandbox.shapes.add(s);
               }
             }
             break;
