@@ -54,6 +54,13 @@ class HUD {
     cColor.buttons.add(blue);
     Button green = new Button(225, 215, "Green", false, false, true, false);
     cColor.buttons.add(green);
+    // sandbox change function
+    Button horizontal = new Button(225, 95, "Horizontal", false, false, true, false);
+    cFunction.buttons.add(horizontal);
+    Button vertical = new Button(225, 155, "Vertical", false, false, true, false);
+    cFunction.buttons.add(vertical);
+    Button scale = new Button(225, 215, "Scale", false, false, true, false);
+    cFunction.buttons.add(scale);
     
   }
   
@@ -115,16 +122,22 @@ class HUD {
             if (b.isVisible){
               extend = "default";
               if(selected != null){
-                s = new Shape(mouseX, mouseY, selected.w, selected.h, selected.r, selected.g, selected.b, selected.shape);
+                s = new Shape(mouseX, mouseY, selected.w, selected.h, selected.r, selected.g, selected.b, selected.shape, selected.func);
                 sceneSandbox.dragging = s;
                 selected.children.add(s);
               }
             }
             break;
           case "New Container":
+            if(b.isVisible){
+              extend = "default";
+              sceneSandbox.drawing = true;
+            }
+            break;
           case "New Shape":
           case "Change Color":
           case "Change Shape":
+          case "Change\nFunction":
             if (b.isVisible){
               extend = b.buttonName;
             }
@@ -141,19 +154,19 @@ class HUD {
               
               case "Square":
                 extend = "default";
-                s = new Shape(width/2, height/2, 50, 50, 0, 0, 255, "SQUARE");
+                s = new Shape(width/2, height/2, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
                 sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Circle":
                 extend = "default";
-                s = new Shape(width/2, height/2, 50, 50, 255, 0, 0, "CIRCLE");
+                s = new Shape(width/2, height/2, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
                 sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Triangle":
                 extend = "default";
-                s = new Shape(width/2, height/2, 50, 50, 0, 255, 0, "TRIANGLE");
+                s = new Shape(width/2, height/2, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
                 sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
@@ -191,6 +204,14 @@ class HUD {
                 extend = "default";
                 if(selected != null){
                   selected.changeColor(0, 255, 0);
+                }
+                break;
+              case "Horizontal":
+              case "Vertical":
+              case "Scale":
+                extend = "default";
+                if(selected != null){
+                  selected.changeFunc(e.buttonName);
                 }
                 break;
               

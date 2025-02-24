@@ -1,13 +1,15 @@
 class Shape {
-  float x, y, w, h, r, g, b;
+  float x, y, w, h, r, g, b, xOff = 0, yOff = 0, scale = 0;;
   String shape;
+  String func = "horizontal";
   boolean isHovered, Clicked = false, wasClicked = false;
   boolean highlight = false;
+  float theta = 0.0;
   AABB aabb;
   
   ArrayList<Shape> children = new ArrayList();
   
-  Shape (float x, float y, float w, float h, float r, float g, float b, String shape){
+  Shape (float x, float y, float w, float h, float r, float g, float b, String shape, String func){
     this.x = x;
     this.y = y;
     this.w = w;
@@ -16,13 +18,14 @@ class Shape {
     this.g = g;
     this.b = b;
     this.shape = shape;
+    this.func = func;
     aabb = new AABB(x, y, w, h);
   }
   
   void update(){
     
     aabb.recalc(x, y, w, h);
-    
+    function();
     
     
     if(Mouse.onUp(Mouse.LEFT)){
@@ -66,15 +69,15 @@ class Shape {
      
       case "SQUARE":
         fill(r, g, b);
-        rect(x - w/2, y - h/2, w, h);
+        rect(x - w/2 + xOff - scale/2, y - h/2 + yOff - scale/2, w + scale, h + scale);
         break;
       case "CIRCLE":
         fill(r, g, b);
-        circle(x, y, w);
+        circle(x + xOff, y + yOff, w + scale);
         break;
       case "TRIANGLE":
         fill(r, g, b);
-        triangle(x - w/2, y + h/2, x + w/2, y + h/2, x, y - h/2);
+        triangle(x - w/2 + xOff - scale, y + h/2 + yOff + scale, x + w/2 + xOff + scale, y + h/2 + yOff + scale, x + xOff, y - h/2 + yOff - scale);
         break;
       
     }    
@@ -106,6 +109,46 @@ class Shape {
       s.changeColor(r, g, b);
     }
     
+  }
+  
+  void changeFunc(String f){
+    xOff = 0;
+    yOff = 0;
+    scale = 0;
+    func = f;
+    for(Shape s : children){
+      s.changeFunc(f);
+    }
+  }
+  
+  void function(){
+    
+    switch (func){
+      case "Horizontal":
+        xOff = sin(theta) * 5;
+        break;
+      case "Vertical":
+        yOff = sin(theta) * 5;
+        break;
+      case "Scale":
+        scale = sin(theta) * 5;
+        break;
+    }
+    theta += .1;
+    
+  }
+  
+  boolean isChild(Shape shape){
+    
+    for(Shape s : children){
+      if(s == shape){
+        return true;
+      }
+      if (s.isChild(shape)){
+        return true;
+      }
+    }
+    return false;
   }
   
 }
@@ -140,6 +183,61 @@ class AABB {
     if (ymin > mouseY) return false;
     colliding = true; 
     return true;
+  }
+  
+}
+
+class Container {
+  ArrayList<Shape> shapes = new ArrayList();
+  float x, y, w, h;
+  Shape target;
+  AABB aabb;
+  
+  Container(float x1, float y1, float x2, float y2){
+    
+    if (x1 > x2){
+      x = (x1 - x2)/2 + x2;
+      w = x1 - x2;
+    } else {
+      x = (x2 - x1)/2 + x1;
+      w = x2 - x1;
+    }
+    
+    if (y1 > y2){
+      y = (y1 - y2)/2 + y2;
+      h = y1 - y2;
+    } else {
+      y = (y2 - y1)/2 + y1;
+      h = y2 - y1; 
+    }
+    
+    if (h < 60){
+      h = 60;
+    }
+    if (w < 60){
+      w = 60;
+    }
+    aabb = new AABB(x, y, w, h);
+  }
+  
+  void update(){
+    
+    if(aabb.checkCollision()){
+      if(Mouse.onDown(Mouse.RIGHT)){
+        sceneSandbox.drag = this;
+      }
+    }
+    
+    if(Mouse.onUp(Mouse.RIGHT)){
+        sceneSandbox.drag = null;
+    }
+    
+  }
+  
+  void draw(){
+    noFill();
+    stroke(0);
+    rect(x - w/2, y - h/2, w, h);
   }
   
 }
