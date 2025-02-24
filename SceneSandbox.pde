@@ -15,9 +15,13 @@ class SceneSandbox {
   Textbox text = new Textbox(width/2, height - 75, 1280, 150, 20, " ");
   Textbox left = new Textbox(75, height/2 - 75, 150, 570, 16, " ");
   Textbox right = new Textbox(width - 75, height/2 - 75, 150, 570, 16, " ");
+  Textbox top = new Textbox(width/2, -100, 1280, 200, 20, "  ");
   
   void update(){
-
+    text.update();
+    left.update();
+    right.update();
+    top.update();
     
     for(int i = 0; i < shapes.size(); i++){
       Shape s = shapes.get(i);
@@ -87,6 +91,7 @@ class SceneSandbox {
     text.draw();
     left.draw();
     right.draw();
+    top.draw();
     hud.draw();
   }
   

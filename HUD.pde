@@ -54,6 +54,8 @@ class HUD {
     cColor.buttons.add(blue);
     Button green = new Button(225, 215, "Green", false, false, true, false);
     cColor.buttons.add(green);
+    Button purple = new Button(225, 275, "Purple", false, false, true, false);
+    cColor.buttons.add(purple);
     // sandbox change function
     Button horizontal = new Button(225, 95, "Horizontal", false, false, true, false);
     cFunction.buttons.add(horizontal);
@@ -155,19 +157,19 @@ class HUD {
               
               case "Square":
                 extend = "default";
-                s = new Shape(width/2, height/2, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
+                s = new Shape(mouseX, mouseY, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
                 sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Circle":
                 extend = "default";
-                s = new Shape(width/2, height/2, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
+                s = new Shape(mouseX, mouseY, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
                 sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Triangle":
                 extend = "default";
-                s = new Shape(width/2, height/2, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
+                s = new Shape(mouseX, mouseY, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
                 sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
@@ -205,6 +207,12 @@ class HUD {
                 extend = "default";
                 if(selected != null){
                   selected.changeColor(0, 255, 0);
+                }
+                break;
+              case "Purple":
+                extend = "default";
+                if(selected != null){
+                  selected.changeColor(150, 60, 220);
                 }
                 break;
               case "Horizontal":
@@ -320,6 +328,7 @@ class Textbox {
   String text;
   float x, y, w = 1200, h = 200, textSize;
   
+  AABB aabb;
   
   Textbox(float x, float y, float w, float h, float textSize, String text){
    this.text = text; 
@@ -328,6 +337,15 @@ class Textbox {
    this.w = w;
    this.h = h;
    this.textSize = textSize;
+   aabb = new AABB(x, y, w, h);
+  }
+  
+  void update(){
+   for(Shape s : sceneSandbox.shapes){
+     if(aabb.checkCollision(s.aabb)){
+       s.attract(width/2, height/2);
+     }
+   }
   }
   
   void draw(){

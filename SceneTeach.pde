@@ -1,7 +1,7 @@
 class SceneTeach {
   
   HUD hud = new HUD();
-  Textbox textbox = new Textbox(width/2, height - 100, 1200, 200, 16, "test test test test test test teste  ts est ets est ets est est ets est est es est ets ets est es est es dfsg sdf gs dfg sdf g sf g sdf g dsfg sdfgsdfgsdfg s dfg sdf \n" +
+  Textbox textbox = new Textbox(width/2, height - 100, 1200, 200, 20, "test test test test test tes es est ets ets est es est es dfsg sdf gs dfg sdf g sf g sdf g dsfg sdfgsdfgsdfg s dfg sdf \n" +
   "sda");
   int slide = 0;
   

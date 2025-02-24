@@ -166,6 +166,13 @@ class Shape {
     this.y -= y * dt;
   }
   
+  void attract(float x, float y){
+    x = this.x - x;
+    y = this.y - y;
+    this.x -= x * dt;
+    this.y -= y * dt;
+  }
+  
 }
 
 class AABB {
