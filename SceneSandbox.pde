@@ -10,7 +10,7 @@ class SceneSandbox {
   Container c;
   
   HUD hud = new HUD();
-  Textbox text = new Textbox(width/2, height - 75, 1280, 150, 20, " ");
+  Textbox text = new Textbox(width/2, height - 75, 1280, 150, 30, " ");
   Textbox left = new Textbox(75, height/2 - 75, 150, 570, 16, " ");
   Textbox right = new Textbox(width - 75, height/2 - 75, 150, 570, 16, " ");
   Textbox top = new Textbox(width/2, -100, 1280, 200, 20, "  ");

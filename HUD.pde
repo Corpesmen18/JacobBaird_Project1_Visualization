@@ -181,64 +181,64 @@ class HUD {
                 break;
               case "To Square":
                 if(selected != null){
-                  selected.changeShape("SQUARE");
+                  selected.iChangeShape("SQUARE");
                 }
                 break;
               case "To Circle":
                 if(selected != null){
-                  selected.changeShape("CIRCLE");
+                  selected.iChangeShape("CIRCLE");
                 }
                 break;
               case "To Triangle":
                 if(selected != null){
-                  selected.changeShape("TRIANGLE");
+                  selected.iChangeShape("TRIANGLE");
                 }
                 break;
               case "Red":
                 if(selected != null){
-                  selected.changeColor(255, 0, 0);
+                  selected.iChangeColor(255, 0, 0);
                 }
                 break;
               case "Blue":
                 if(selected != null){
-                  selected.changeColor(0, 0, 255);
+                  selected.iChangeColor(0, 0, 255);
                 }
                 break;
               case "Green":
                 if(selected != null){
-                  selected.changeColor(0, 255, 0);
+                  selected.iChangeColor(0, 255, 0);
                 }
                 break;
               case "Purple":
                 if(selected != null){
-                  selected.changeColor(150, 60, 220);
+                  selected.iChangeColor(150, 60, 220);
                 }
                 break;
               case "Orange":
                 if(selected != null){
-                  selected.changeColor(255, 130, 0);
+                  selected.iChangeColor(255, 130, 0);
                 }
                 break;
               case "Yellow":
                 if(selected != null){
-                  selected.changeColor(255, 255, 0);
+                  selected.iChangeColor(255, 255, 0);
                 }
                 break;
               case "Cyan":
                 if(selected != null){
-                  selected.changeColor(0, 255, 230);
+                  selected.iChangeColor(0, 255, 230);
                 }
                 break;
               case "Pink":
                 if(selected != null){
-                  selected.changeColor(255, 105, 175);
+                  selected.iChangeColor(255, 105, 175);
                 }
                 break;
               case "Horizontal":
               case "Vertical":
               case "Scale":
                 if(selected != null){
-                  selected.changeFunc(e.buttonName);
+                  selected.iChangeFunc(e.buttonName);
                 }
                 break;
               
@@ -374,7 +374,7 @@ class Textbox {
     fill(0);
     textAlign(LEFT, LEFT);
     textSize(textSize);
-    text(text, x - w/2 + 6, y - h/2 + 20);
+    text(text, x - w/2 + 6, y - h/2 + 30);
     stroke(0);
   }
   
