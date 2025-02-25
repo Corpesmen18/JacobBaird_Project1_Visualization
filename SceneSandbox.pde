@@ -4,10 +4,8 @@ class SceneSandbox {
   ArrayList<Shape> shapes = new ArrayList();
   ArrayList<Container> boxes = new ArrayList();
   String lastAction = "default";
-  boolean debug = false;
   boolean drawing = false;
   boolean draw2 = false;
-  Shape dragging;
   Container drag;
   Container c;
   

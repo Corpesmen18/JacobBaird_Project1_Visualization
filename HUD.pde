@@ -125,7 +125,7 @@ class HUD {
           case "DEBUG":
             if(b.isVisible){
               extend = "default";
-              sceneSandbox.debug = !sceneSandbox.debug;
+              debug = !debug;
             }
             break;
           case "New Child":
@@ -133,7 +133,7 @@ class HUD {
               extend = "default";
               if(selected != null){
                 s = new Shape(mouseX, mouseY, selected.w, selected.h, selected.r, selected.g, selected.b, selected.shape, selected.func);
-                sceneSandbox.dragging = s;
+                dragging = s;
                 selected.children.add(s);
                 sceneSandbox.shapes.add(s);
               }
@@ -166,17 +166,17 @@ class HUD {
               
               case "Square":
                 s = new Shape(mouseX, mouseY, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
-                sceneSandbox.dragging = s;
+                dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Circle":
                 s = new Shape(mouseX, mouseY, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
-                sceneSandbox.dragging = s;
+                dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Triangle":
                 s = new Shape(mouseX, mouseY, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
-                sceneSandbox.dragging = s;
+                dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "To Square":

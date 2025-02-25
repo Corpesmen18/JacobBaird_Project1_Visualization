@@ -6,6 +6,8 @@ SceneTeach sceneTeach;
 Shape selected;
 float dt;
 float prevTime;
+boolean debug;
+Shape dragging;
 
 void setup() {
   size(1280, 720);

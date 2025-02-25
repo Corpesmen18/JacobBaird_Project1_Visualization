@@ -2,6 +2,7 @@ class Shape {
   float x, y, w, h, r, g, b, xOff = 0, yOff = 0, scale = 0;;
   String shape;
   String func = "horizontal";
+  String tower = "basic";
   boolean isHovered, Clicked = false, wasClicked = false;
   boolean highlight = false;
   float theta = 0.0;
@@ -33,13 +34,19 @@ class Shape {
     //  }
     //}
     
+    switch (tower){
+      case "basic":
+        
+        break;
+    }
+    
     if(Mouse.onUp(Mouse.LEFT)){
-      sceneSandbox.dragging = null;
+      dragging = null;
     }
     
     if(aabb.checkCollision() && Mouse.onDown(Mouse.LEFT)){
       selected = this;
-      sceneSandbox.dragging = this;
+      dragging = this;
     }
     
     //for (Shape s : children){
@@ -60,9 +67,9 @@ class Shape {
   void draw(){
     
     for (Shape s : children){
-      if(sceneSandbox.debug){
+      if(debug){
         stroke(r, g, b);
-        line(x, y, s.x, s.y);
+        line(x + xOff, y + yOff, s.x + s.xOff, s.y + s.yOff);
       }
       //s.draw();
     }
@@ -277,7 +284,7 @@ class Container {
         sceneSandbox.drag = this;
       }
       if (Mouse.onDown(Mouse.LEFT) && shapes.size() > 0){
-        sceneSandbox.dragging = shapes.get(shapes.size() - 1);
+        dragging = shapes.get(shapes.size() - 1);
         shapes.remove(shapes.size() - 1);
         if(shapes.size() == 0){
           target = null;
@@ -304,6 +311,36 @@ class Container {
       }
     }
     return false;
+  }
+}
+
+// secret game code
+
+class Bullet{
+  float x, y, radius, angle, damage;
+  boolean isDead;
+  PVector velocity;
+  AABB aabb;
+  
+  
+  Bullet (float x, float y, float radius, float angle, float damage){
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.angle = angle;
+    this.damage = damage;
+    aabb = new AABB(x, y, radius, radius);
+  }
+  
+  void update(){
+    x += velocity.x * cos(angle) * dt;
+    y += velocity.y * sin(angle) * dt; 
+  }
+  
+  void draw(){
+    strokeWeight(1);
+    circle(x, y, radius);
+    strokeWeight(2);
   }
   
 }

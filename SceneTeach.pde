@@ -1,30 +1,27 @@
 class SceneTeach {
   
+  ArrayList<Shape> shapes = new ArrayList();
+  
+  Shape sh;
   HUD hud = new HUD();
-  Textbox textbox = new Textbox(width/2, height - 100, 1200, 200, 20, "test test test test test tes es est ets ets est es est es dfsg sdf gs dfg sdf g sf g sdf g dsfg sdfgsdfgsdfg s dfg sdf \n" +
-  "sda");
+  Textbox textbox = new Textbox(width/2, height - 100, 1200, 200, 20, "Inheritance and Polymorphism are two interconnected programming concepts that relate heavily to Object Oriented Programming. \n" +
+  "To understnd these concepts we should first get a general understanding of what Object Oriented Programming is.");
   int slide = 0;
   
   void update(){
     hud.update();
+    
+    for (Shape s : shapes){
+      s.update();
+    }
+    
   }
   
   void draw(){
     background(128);
     
-    switch(slide){
-      case 0:
-        fill(255, 0, 0);
-        rect(width/2 - 50, height/2 - 50, 100, 100);
-        break;
-      case 1:
-        fill(0, 255, 0);
-        circle(width/2, height/2, 100);
-        break;
-      case 2:
-        fill(0, 0, 255);
-        triangle(width/2 - 50, height/2 + 50, width/2 + 50, height/2 + 50, width/2, height/2 - 50);
-        break;
+    for (Shape s : shapes){
+      s.draw();
     }
     
     textbox.draw();
@@ -36,14 +33,29 @@ class SceneTeach {
     
     switch(slide){
      case 1:
-       textbox.text = "wow";
+       sh = new Shape(width/2, height/2, 50, 50, 255, 0, 0, "SQUARE", "Horizontal");
+       shapes.add(sh);
+       textbox.text = "Anything can be considered an object in programming. This square is an object and has various different properties and functions associated \n" +
+       "with it such as the shape, color, and movement.";
        break;
      case 2:
-      textbox.text = "this \n" +
-      "is \n" +
-      "so many \n" +
-      "lines";
-      break;
+       sh = new Shape(width/2 - 100, height/2, 50, 50, 0, 255, 0, "CIRCLE", "Vertical");
+       shapes.add(sh);
+       sh = new Shape(width/2 + 100, height/2, 50, 50, 0, 0, 255, "TRIANGLE", "Scale");
+       shapes.add(sh);
+       textbox.text = "These properties and functions can change between differnt versions of the same object. All of these shapes are objects form the same class \n" +
+       "but they possess different properties. Inheritance and Polymorphism builds upon the diverse possibilities of objects by making it more \n" + "convenient to utilize";
+       break;
+     case 3:
+       debug = true;
+       sh = new Shape(width/2 - 50, height/2 - 100, 50, 50, 255, 0, 0, "CIRCLE", "Scale");
+       shapes.add(sh);
+       shapes.get(0).children.add(sh);
+       sh = new Shape(width/2 + 50, height/2 - 100, 50, 50, 0, 0, 255, "SQUARE", "Vertical");
+       shapes.add(sh);
+       shapes.get(0).children.add(sh);
+       textbox.text = "Inheritance allows us to make children of an object with either the same or different properties to it's parent.";
+       break;
     }
     
     
