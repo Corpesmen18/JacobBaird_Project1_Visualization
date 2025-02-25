@@ -56,6 +56,14 @@ class HUD {
     cColor.buttons.add(green);
     Button purple = new Button(225, 275, "Purple", false, false, true, false);
     cColor.buttons.add(purple);
+    Button orange = new Button(225, 335, "Orange", false, false, true, false);
+    cColor.buttons.add(orange);
+    Button yellow = new Button(225, 395, "Yellow", false, false, true, false);
+    cColor.buttons.add(yellow);
+    Button cyan = new Button(225, 455, "Cyan", false, false, true, false);
+    cColor.buttons.add(cyan);
+    Button pink = new Button(225, 515, "Pink", false, false, true, false);
+    cColor.buttons.add(pink);
     // sandbox change function
     Button horizontal = new Button(225, 95, "Horizontal", false, false, true, false);
     cFunction.buttons.add(horizontal);
@@ -153,72 +161,82 @@ class HUD {
           e.update();
           
           if (e.isClicked()){
+            extend = "default";
             switch(e.buttonName){
               
               case "Square":
-                extend = "default";
                 s = new Shape(mouseX, mouseY, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
                 sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Circle":
-                extend = "default";
                 s = new Shape(mouseX, mouseY, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
                 sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "Triangle":
-                extend = "default";
                 s = new Shape(mouseX, mouseY, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
                 sceneSandbox.dragging = s;
                 sceneSandbox.shapes.add(s);
                 break;
               case "To Square":
-                extend = "default";
                 if(selected != null){
                   selected.changeShape("SQUARE");
                 }
                 break;
               case "To Circle":
-                extend = "default";
                 if(selected != null){
                   selected.changeShape("CIRCLE");
                 }
                 break;
               case "To Triangle":
-                extend = "default";
                 if(selected != null){
                   selected.changeShape("TRIANGLE");
                 }
                 break;
               case "Red":
-                extend = "default";
                 if(selected != null){
                   selected.changeColor(255, 0, 0);
                 }
                 break;
               case "Blue":
-                extend = "default";
                 if(selected != null){
                   selected.changeColor(0, 0, 255);
                 }
                 break;
               case "Green":
-                extend = "default";
                 if(selected != null){
                   selected.changeColor(0, 255, 0);
                 }
                 break;
               case "Purple":
-                extend = "default";
                 if(selected != null){
                   selected.changeColor(150, 60, 220);
+                }
+                break;
+              case "Orange":
+                if(selected != null){
+                  selected.changeColor(255, 130, 0);
+                }
+                break;
+              case "Yellow":
+                if(selected != null){
+                  selected.changeColor(255, 255, 0);
+                }
+                break;
+              case "Cyan":
+                if(selected != null){
+                  selected.changeColor(0, 255, 230);
+                }
+                break;
+              case "Pink":
+                if(selected != null){
+                  selected.changeColor(255, 105, 175);
                 }
                 break;
               case "Horizontal":
               case "Vertical":
               case "Scale":
-                extend = "default";
                 if(selected != null){
                   selected.changeFunc(e.buttonName);
                 }
