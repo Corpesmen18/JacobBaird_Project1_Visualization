@@ -3,7 +3,6 @@ class SceneSandbox {
   float x1, y1, x2, y2;
   ArrayList<Shape> shapes = new ArrayList();
   ArrayList<Container> boxes = new ArrayList();
-  String lastAction = "default";
   boolean drawing = false;
   boolean draw2 = false;
   Container drag;
@@ -59,6 +58,7 @@ class SceneSandbox {
         boxes.add(c);
         drawing = false;
         draw2 = false;
+        lastAction = "Container";
       }
       
     }
@@ -67,8 +67,34 @@ class SceneSandbox {
        case "default":
          text.text = "Interact with the shapes and buttons to learn more about inheritance and polymorphism!";
          break;
-      
-      
+       case "New object":
+         text.text = "Any object can become the parent of many different or similar objects!";
+         break;
+       case "Inherited change":
+         text.text = "Changing the property of a parent will change the same property on all it's children if they \nhaven't overridden it!";
+         break;
+       case "New child":
+         text.text = "When making a new child it will immediatley inherit all the properties of it's parent!";
+         break;
+       case "Override":
+         text.text = "Changing the properties of a child will override the properties inherited from the parent and \nfurther changes to that property of the parent will no longer " + 
+         "affect the child!";
+         break;
+       case "Container":
+         text.text = "Arrays can contain many different objects of the same type!";
+         break;
+       case "Shape in container":
+         text.text = "Arrays can only hold objects of the same type and it's children!";
+         break;
+       case "Child in container":
+         text.text = "Even children of an object can go into an array meant to hold it's parent!";
+         break;
+       case "Overridden child":
+         text.text = "Even if the child has overridden functions or properties the array will still accept it!";
+         break;
+       case "Rejected":
+         text.text = "An array can't contain objects of a different type or the parents of it's type!";
+         break;
     }
     
     hud.update();

@@ -1,6 +1,5 @@
 class Shape {
   float x, y, w, h, r, g, b, xOff = 0, yOff = 0, scale = 0;
-  ;
   String shape;
   String func = "horizontal";
   String tower = "basic";
@@ -9,6 +8,7 @@ class Shape {
   boolean inheritingS = true, inheritingC = true, inheritingF = true;
   float theta = 0.0;
   AABB aabb;
+  Shape parent;
 
   ArrayList<Shape> children = new ArrayList();
 
@@ -300,10 +300,18 @@ class Container {
             if (Mouse.onUp(Mouse.LEFT)) {
               target = s;
               shapes.add(s);
+              lastAction = "Shape in container";
             }
           } else if (target.isChild(s) && Mouse.onUp(Mouse.LEFT)) {
             shapes.add(s);
-          } else s.repel(x, y);
+            if(s.inheritingF == false || s.inheritingC == false || s.inheritingC == false){
+              lastAction = "Overridden child";
+            } else lastAction = "Child in container";
+            
+          } else if (dragging == null){
+            s.repel(x, y);
+            lastAction = "Rejected";
+          }
         }
       } //else s.repel(x, y);
     }

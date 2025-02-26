@@ -7,6 +7,7 @@ Shape selected;
 float dt;
 float prevTime;
 boolean debug;
+String lastAction = "default";
 Shape dragging;
 
 void setup() {

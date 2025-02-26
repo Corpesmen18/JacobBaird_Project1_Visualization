@@ -1,11 +1,11 @@
 class HUD {
-  
+
   ArrayList<Button> buttons = new ArrayList();
   String extend = "default";
   Shape s;
-  
+
   HUD() {
-    
+
     Button sandbox = new Button(width/2 - 150, height/2, "SANDBOX", true, true, false, false);
     buttons.add(sandbox);
     Button teach = new Button(width/2 + 150, height/2, "TEACH", true, true, false, false);
@@ -16,7 +16,7 @@ class HUD {
     buttons.add(title);
     Button debug = new Button(width - 225, height - 190, "DEBUG", false, false, true, false);
     buttons.add(debug);
-    
+
     // sandbox menu right buttons
     Button shape = new Button(width - 75, 35, "New Shape", false, false, true, false);
     buttons.add(shape);
@@ -31,8 +31,8 @@ class HUD {
     shape.buttons.add(circle);
     Button triangle = new Button(width - 225, 155, "Triangle", false, false, true, false);
     shape.buttons.add(triangle);
-    
-    
+
+
     // sandbox menu left buttons
     Button cShape = new Button(75, 35, "Change Shape", false, false, true, false);
     buttons.add(cShape);
@@ -71,205 +71,240 @@ class HUD {
     cFunction.buttons.add(vertical);
     Button scale = new Button(225, 215, "Scale", false, false, true, false);
     cFunction.buttons.add(scale);
-    
   }
-  
-  void update(){
-    
+
+  void update() {
+
     for (int i = 0; i < buttons.size(); i++) {
       Button b = buttons.get(i);
       b.update();
-      if (b.title){
-        if(sceneTitle != null){
+      if (b.title) {
+        if (sceneTitle != null) {
           b.isVisible = true;
         } else b.isVisible = false;
       }
-      if(b.sand){
-        if(sceneSandbox != null){
+      if (b.sand) {
+        if (sceneSandbox != null) {
           b.isVisible = true;
         } else if (!b.sand) b.isVisible = false;
       }
-      if(b.teach){
-        if(sceneTeach != null){
+      if (b.teach) {
+        if (sceneTeach != null) {
           b.isVisible = true;
         } else if (!b.teach) b.isVisible = false;
       }
-      
-      if(b.isClicked()){
-        
-        switch(b.buttonName){
-          case "SANDBOX":
-            if(b.isVisible){
-              extend = "default";
-              switchToSandbox();
+
+      if (b.isClicked()) {
+
+        switch(b.buttonName) {
+        case "SANDBOX":
+          if (b.isVisible) {
+            extend = "default";
+            switchToSandbox();
+          }
+          break;
+        case "TEACH":
+          if (b.isVisible) {
+            extend = "default";
+            switchToTeach();
+          }
+          break;
+        case "NEXT":
+          if (b.isVisible) {
+            extend = "default";
+            sceneTeach.Progress();
+          }
+          break;
+        case "MENU":
+          if (b.isVisible) {
+            extend = "default";
+            switchToTitle();
+          }
+          break;
+        case "DEBUG":
+          if (b.isVisible) {
+            extend = "default";
+            debug = !debug;
+          }
+          break;
+        case "New Child":
+          if (b.isVisible) {
+            extend = "default";
+            if (selected != null) {
+              s = new Shape(mouseX, mouseY, selected.w, selected.h, selected.r, selected.g, selected.b, selected.shape, selected.func);
+              s.parent = selected;
+              dragging = s;
+              selected.children.add(s);
+              sceneSandbox.shapes.add(s);
             }
-            break;
-          case "TEACH":
-            if(b.isVisible){
-              extend = "default";
-              switchToTeach();
-            }
-            break;
-          case "NEXT":
-            if(b.isVisible){
-              extend = "default";
-              sceneTeach.Progress();
-            }
-            break;
-          case "MENU":
-            if(b.isVisible){
-              extend = "default";
-              switchToTitle();
-            }
-            break;
-          case "DEBUG":
-            if(b.isVisible){
-              extend = "default";
-              debug = !debug;
-            }
-            break;
-          case "New Child":
-            if (b.isVisible){
-              extend = "default";
-              if(selected != null){
-                s = new Shape(mouseX, mouseY, selected.w, selected.h, selected.r, selected.g, selected.b, selected.shape, selected.func);
-                dragging = s;
-                selected.children.add(s);
-                sceneSandbox.shapes.add(s);
-              }
-            }
-            break;
-          case "New Container":
-            if(b.isVisible){
-              extend = "default";
-              sceneSandbox.drawing = true;
-            }
-            break;
-          case "New Shape":
-          case "Change Color":
-          case "Change Shape":
-          case "Change\nFunction":
-            if (b.isVisible){
-              extend = b.buttonName;
-            }
-            break;
+            lastAction = "New child";
+          }
+          break;
+        case "New Container":
+          if (b.isVisible) {
+            extend = "default";
+            sceneSandbox.drawing = true;
+          }
+          break;
+        case "New Shape":
+        case "Change Color":
+        case "Change Shape":
+        case "Change\nFunction":
+          if (b.isVisible) {
+            extend = b.buttonName;
+          }
+          break;
         }
       }
-      if (b.buttonName == extend){
-        for (Button e : b.buttons){
+      if (b.buttonName == extend) {
+        for (Button e : b.buttons) {
           e.isVisible = true;
           e.update();
-          
-          if (e.isClicked()){
+
+          if (e.isClicked()) {
             extend = "default";
-            switch(e.buttonName){
-              
-              case "Square":
-                s = new Shape(mouseX, mouseY, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
-                dragging = s;
-                sceneSandbox.shapes.add(s);
-                break;
-              case "Circle":
-                s = new Shape(mouseX, mouseY, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
-                dragging = s;
-                sceneSandbox.shapes.add(s);
-                break;
-              case "Triangle":
-                s = new Shape(mouseX, mouseY, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
-                dragging = s;
-                sceneSandbox.shapes.add(s);
-                break;
-              case "To Square":
-                if(selected != null){
-                  selected.iChangeShape("SQUARE");
-                }
-                break;
-              case "To Circle":
-                if(selected != null){
-                  selected.iChangeShape("CIRCLE");
-                }
-                break;
-              case "To Triangle":
-                if(selected != null){
-                  selected.iChangeShape("TRIANGLE");
-                }
-                break;
-              case "Red":
-                if(selected != null){
-                  selected.iChangeColor(255, 0, 0);
-                }
-                break;
-              case "Blue":
-                if(selected != null){
-                  selected.iChangeColor(0, 0, 255);
-                }
-                break;
-              case "Green":
-                if(selected != null){
-                  selected.iChangeColor(0, 255, 0);
-                }
-                break;
-              case "Purple":
-                if(selected != null){
-                  selected.iChangeColor(150, 60, 220);
-                }
-                break;
-              case "Orange":
-                if(selected != null){
-                  selected.iChangeColor(255, 130, 0);
-                }
-                break;
-              case "Yellow":
-                if(selected != null){
-                  selected.iChangeColor(255, 255, 0);
-                }
-                break;
-              case "Cyan":
-                if(selected != null){
-                  selected.iChangeColor(0, 255, 230);
-                }
-                break;
-              case "Pink":
-                if(selected != null){
-                  selected.iChangeColor(255, 105, 175);
-                }
-                break;
-              case "Horizontal":
-              case "Vertical":
-              case "Scale":
-                if(selected != null){
-                  selected.iChangeFunc(e.buttonName);
-                }
-                break;
-              
+            switch(e.buttonName) {
+
+            case "Square":
+              s = new Shape(mouseX, mouseY, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
+              dragging = s;
+              sceneSandbox.shapes.add(s);
+              lastAction = "New object";
+              break;
+            case "Circle":
+              s = new Shape(mouseX, mouseY, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
+              dragging = s;
+              sceneSandbox.shapes.add(s);
+              lastAction = "New object";
+              break;
+            case "Triangle":
+              s = new Shape(mouseX, mouseY, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
+              dragging = s;
+              sceneSandbox.shapes.add(s);
+              lastAction = "New object";
+              break;
+            case "To Square":
+              if (selected != null) {
+                selected.iChangeShape("SQUARE");
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+
+              break;
+            case "To Circle":
+              if (selected != null) {
+                selected.iChangeShape("CIRCLE");
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "To Triangle":
+              if (selected != null) {
+                selected.iChangeShape("TRIANGLE");
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "Red":
+              if (selected != null) {
+                selected.iChangeColor(255, 0, 0);
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "Blue":
+              if (selected != null) {
+                selected.iChangeColor(0, 0, 255);
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "Green":
+              if (selected != null) {
+                selected.iChangeColor(0, 255, 0);
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "Purple":
+              if (selected != null) {
+                selected.iChangeColor(150, 60, 220);
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "Orange":
+              if (selected != null) {
+                selected.iChangeColor(255, 130, 0);
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "Yellow":
+              if (selected != null) {
+                selected.iChangeColor(255, 255, 0);
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "Cyan":
+              if (selected != null) {
+                selected.iChangeColor(0, 255, 230);
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "Pink":
+              if (selected != null) {
+                selected.iChangeColor(255, 105, 175);
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
+            case "Horizontal":
+            case "Vertical":
+            case "Scale":
+              if (selected != null) {
+                selected.iChangeFunc(e.buttonName);
+                if (selected.parent == null) {
+                  lastAction = "Inherited change";
+                } else lastAction = "Override";
+              }
+              break;
             }
           }
         }
       } else {
-        for (Button e : b.buttons){
+        for (Button e : b.buttons) {
           e.isVisible = false;
         }
       }
     }
-    
-    
-    
   }
-  
-  void draw(){
-    
+
+  void draw() {
+
     for (int i = 0; i < buttons.size(); i++) {
       Button b = buttons.get(i);
       b.draw();
-      if (b.buttonName == extend){
-        for (Button e : b.buttons){
-           e.draw();
+      if (b.buttonName == extend) {
+        for (Button e : b.buttons) {
+          e.draw();
         }
       }
     }
-    
   }
-  
 }
 
 class Button {
@@ -284,9 +319,9 @@ class Button {
   boolean isHovered;
   boolean isClicked = false;
   boolean wasClicked = false;
-  
+
   ArrayList<Button> buttons = new ArrayList();
-  
+
   Button(float x, float y, String name, boolean isVisible, boolean title, boolean sand, boolean teach) {
     this.x = x;
     this.y = y;
@@ -297,9 +332,9 @@ class Button {
     buttonName = name;
     curColor = normalColor;
   }
-  void update(){
-  
-  if (mouseX > x - w/2 && mouseX < x + w/2 && mouseY > y - h/2 && mouseY < y + h/2) {
+  void update() {
+
+    if (mouseX > x - w/2 && mouseX < x + w/2 && mouseY > y - h/2 && mouseY < y + h/2) {
       isHovered = true;
       curColor = hoveredColor;
       if (Mouse.onDown(Mouse.LEFT) && !isClicked) {
@@ -311,9 +346,8 @@ class Button {
       isClicked = false;
       curColor = normalColor;
     }
-    
   }
-  
+
   boolean isClicked() {
     if (isClicked && !wasClicked) { // Check if the button was just clicked
       wasClicked = true; // Set wasClicked to true to prevent repeated clicks
@@ -324,7 +358,7 @@ class Button {
     }
     return false;
   }
-  
+
   void draw() {
     if (isVisible) {
       stroke(255);
@@ -339,34 +373,33 @@ class Button {
       //noStroke();
     }
   }
-  
 }
 
 class Textbox {
   String text;
   float x, y, w = 1200, h = 200, textSize;
-  
+
   AABB aabb;
-  
-  Textbox(float x, float y, float w, float h, float textSize, String text){
-   this.text = text; 
-   this.x = x;
-   this.y = y;
-   this.w = w;
-   this.h = h;
-   this.textSize = textSize;
-   aabb = new AABB(x, y, w, h);
+
+  Textbox(float x, float y, float w, float h, float textSize, String text) {
+    this.text = text;
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.textSize = textSize;
+    aabb = new AABB(x, y, w, h);
   }
-  
-  void update(){
-   for(Shape s : sceneSandbox.shapes){
-     if(aabb.checkCollision(s.aabb)){
-       s.attract(width/2, height/2);
-     }
-   }
+
+  void update() {
+    for (Shape s : sceneSandbox.shapes) {
+      if (aabb.checkCollision(s.aabb)) {
+        s.attract(width/2, height/2);
+      }
+    }
   }
-  
-  void draw(){
+
+  void draw() {
     stroke(0);
     strokeWeight(3);
     fill(255);
@@ -377,5 +410,4 @@ class Textbox {
     text(text, x - w/2 + 6, y - h/2 + 30);
     stroke(0);
   }
-  
 }

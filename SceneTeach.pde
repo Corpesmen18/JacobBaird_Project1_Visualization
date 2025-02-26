@@ -59,25 +59,18 @@ class SceneTeach {
        break;
      case 4:
        sh = shapes.get(3);
-       sh.shape = "CIRCLE";
-       sh.func = "Scale";
+       sh.iChangeShape("CIRCLE");
+       sh.iChangeFunc("Scale");
        sh = shapes.get(4);
-       sh.r = 0;
-       sh.b = 255;
-       sh.func = "Vertical";
+       sh.iChangeColor(0, 0, 255);
+       sh.iChangeFunc("Vertical");
        textbox.text = "Polymorphism allows these children to also override the properties provided by their parents. \nThis allows them to be useful for quickly making modified" + 
        " versions of existing objects that \nare intended to used frequently";
        break;
      case 5:
        sh = shapes.get(0);
-       sh.shape = "TRIANGLE";
-       sh.r = 0;
-       sh.g = 255;
-       sh = shapes.get(3);
-       sh.r = 0;
-       sh.g = 255;
-       sh = shapes.get(4);
-       sh.shape = "TRIANGLE";
+       sh.iChangeShape("TRIANGLE");
+       sh.iChangeColor(0, 255, 0);
        textbox.text = "Inheritance also allows the quick modification of the parent and all it's children by simply \nmodifying the parent. The parent of these shapes has changed both" +
        " it's shape and color and the \nchildren reflect some of those changes. But why not all of them? This has to do with \npolymorphism.";
        break;
