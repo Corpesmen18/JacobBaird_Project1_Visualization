@@ -210,6 +210,25 @@ class Shape {
     this.x -= x * dt;
     this.y -= y * dt;
   }
+
+  void resetOverrides() {
+    inheritingF = true;
+    inheritingC = true;
+    inheritingS = true;
+    if (parent != null) {
+      func = parent.func;
+      shape = parent.shape;
+      r = parent.r;
+      g = parent.g;
+      b = parent.b;
+      lastAction = "Reset Overrides";
+    } else lastAction = "No Parent";
+    for (Shape s : children) {
+      s.changeShape(shape);
+      s.changeFunc(func);
+      s.changeColor(r, g, b);
+    }
+  }
 }
 
 class AABB {
@@ -304,11 +323,10 @@ class Container {
             }
           } else if (target.isChild(s) && Mouse.onUp(Mouse.LEFT)) {
             shapes.add(s);
-            if(s.inheritingF == false || s.inheritingC == false || s.inheritingC == false){
+            if (s.inheritingF == false || s.inheritingC == false || s.inheritingC == false) {
               lastAction = "Overridden child";
             } else lastAction = "Child in container";
-            
-          } else if (dragging == null){
+          } else if (dragging == null) {
             s.repel(x, y);
             lastAction = "Rejected";
           }

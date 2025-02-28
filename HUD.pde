@@ -40,6 +40,8 @@ class HUD {
     buttons.add(cColor);
     Button cFunction = new Button(75, 155, "Change\nFunction", false, false, true, false);
     buttons.add(cFunction);
+    Button reset = new Button(75, 215, "Reset\nOverrides", false, false, true, false);
+    buttons.add(reset);
     // sandbox change shape
     Button toSquare = new Button(225, 95, "To Square", false, false, true, false);
     cShape.buttons.add(toSquare);
@@ -144,6 +146,14 @@ class HUD {
           if (b.isVisible) {
             extend = "default";
             sceneSandbox.drawing = true;
+          }
+          break;
+        case "Reset\nOverrides":
+          if(b.isVisible){
+            extend = "default";
+            if(selected != null){
+              selected.resetOverrides();
+            }
           }
           break;
         case "New Shape":

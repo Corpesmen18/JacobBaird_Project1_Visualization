@@ -95,6 +95,12 @@ class SceneSandbox {
        case "Rejected":
          text.text = "An array can't contain objects of a different type or the parents of it's type!";
          break;
+       case "Reset Overrides":
+           text.text = "Removing the overrides of a child will let it return to inheriting those properties from it's parent!";
+         break;
+       case "No Parent":
+         text.text = "This shape has no parent and so doesn't have any overrides to rest!";
+         break;
     }
     
     hud.update();
