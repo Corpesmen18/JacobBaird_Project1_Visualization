@@ -23,6 +23,11 @@ class SceneSandbox {
     for(int i = 0; i < shapes.size(); i++){
       Shape s = shapes.get(i);
       s.update();
+      for (Shape b : shapes){
+        if(s.aabb.checkCollision(b.aabb)){
+          b.repel(s.x, s.y);
+        }
+      }
     }
     
     for (Container b : boxes){

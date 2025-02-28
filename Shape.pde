@@ -270,6 +270,15 @@ class AABB {
     if (ymin > other.ymax) return false;
     return true;
   }
+  
+  public boolean checkContains(AABB other){
+    if (xmax < other.xmax) return true;
+    if (xmin > other.xmin) return true;
+    if (ymax < other.ymax) return true;
+    if (ymin > other.ymin) return true;
+    return false;
+  }
+  
 }
 
 class Container {
@@ -326,12 +335,18 @@ class Container {
             if (s.inheritingF == false || s.inheritingC == false || s.inheritingC == false) {
               lastAction = "Overridden child";
             } else lastAction = "Child in container";
-          } else if (dragging == null) {
+          } else if (dragging != s) {
             s.repel(x, y);
             lastAction = "Rejected";
           }
         }
       } //else s.repel(x, y);
+    }
+    
+    for (Shape s : shapes){
+      if(aabb.checkContains(s.aabb)){
+        s.attract(x, y);
+      }
     }
 
     if (aabb.checkCollision()) {
