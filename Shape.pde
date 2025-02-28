@@ -216,6 +216,9 @@ class Shape {
     inheritingC = true;
     inheritingS = true;
     if (parent != null) {
+      xOff = 0;
+      yOff = 0;
+      scale = 0;
       func = parent.func;
       shape = parent.shape;
       r = parent.r;
@@ -270,15 +273,14 @@ class AABB {
     if (ymin > other.ymax) return false;
     return true;
   }
-  
-  public boolean checkContains(AABB other){
+
+  public boolean checkContains(AABB other) {
     if (xmax < other.xmax) return true;
     if (xmin > other.xmin) return true;
     if (ymax < other.ymax) return true;
     if (ymin > other.ymin) return true;
     return false;
   }
-  
 }
 
 class Container {
@@ -321,35 +323,59 @@ class Container {
     println(shapes.size());
     println(target);
 
-    for (Shape s : sceneSandbox.shapes) {
-      if (aabb.checkCollision(s.aabb)) {
-        if (!isContained(s)) {
-          if (target == null) {
-            if (Mouse.onUp(Mouse.LEFT)) {
-              target = s;
+    if (sceneSandbox != null) {
+      for (Shape s : sceneSandbox.shapes) {
+        if (aabb.checkCollision(s.aabb)) {
+          if (!isContained(s)) {
+            if (target == null) {
+              if (Mouse.onUp(Mouse.LEFT)) {
+                target = s;
+                shapes.add(s);
+                lastAction = "Shape in container";
+              }
+            } else if (target.isChild(s) && Mouse.onUp(Mouse.LEFT)) {
               shapes.add(s);
-              lastAction = "Shape in container";
+              if (s.inheritingF == false || s.inheritingC == false || s.inheritingC == false) {
+                lastAction = "Overridden child";
+              } else lastAction = "Child in container";
+            } else if (dragging != s) {
+              s.repel(x, y);
+              lastAction = "Rejected";
             }
-          } else if (target.isChild(s) && Mouse.onUp(Mouse.LEFT)) {
-            shapes.add(s);
-            if (s.inheritingF == false || s.inheritingC == false || s.inheritingC == false) {
-              lastAction = "Overridden child";
-            } else lastAction = "Child in container";
-          } else if (dragging != s) {
-            s.repel(x, y);
-            lastAction = "Rejected";
           }
-        }
-      } //else s.repel(x, y);
+        } //else s.repel(x, y);
+      }
+    } else if (sceneTeach != null) {
+      for (Shape s : sceneTeach.shapes) {
+        if (aabb.checkCollision(s.aabb)) {
+          if (!isContained(s)) {
+            if (target == null) {
+              if (Mouse.onUp(Mouse.LEFT)) {
+                target = s;
+                shapes.add(s);
+                lastAction = "Shape in container";
+              }
+            } else if (target.isChild(s) && Mouse.onUp(Mouse.LEFT)) {
+              shapes.add(s);
+              if (s.inheritingF == false || s.inheritingC == false || s.inheritingC == false) {
+                lastAction = "Overridden child";
+              } else lastAction = "Child in container";
+            } else if (dragging != s) {
+              s.repel(x, y);
+              lastAction = "Rejected";
+            }
+          }
+        } //else s.repel(x, y);
+      }
     }
-    
-    for (Shape s : shapes){
-      if(aabb.checkContains(s.aabb)){
+
+    for (Shape s : shapes) {
+      if (aabb.checkContains(s.aabb)) {
         s.attract(x, y);
       }
     }
 
-    if (aabb.checkCollision()) {
+    if (aabb.checkCollision() && sceneSandbox != null) {
       if (Mouse.onDown(Mouse.RIGHT)) {
         sceneSandbox.drag = this;
       }
@@ -362,7 +388,7 @@ class Container {
       }
     }
 
-    if (Mouse.onUp(Mouse.RIGHT)) {
+    if (Mouse.onUp(Mouse.RIGHT) && sceneSandbox != null) {
       sceneSandbox.drag = null;
     }
   }
