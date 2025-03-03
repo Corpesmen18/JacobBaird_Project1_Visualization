@@ -320,8 +320,6 @@ class Container {
   void update() {
 
     aabb.recalc(x, y, w, h);
-    println(shapes.size());
-    println(target);
 
     if (sceneSandbox != null) {
       for (Shape s : sceneSandbox.shapes) {

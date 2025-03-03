@@ -14,7 +14,7 @@ class HUD {
     buttons.add(next);
     Button title = new Button(225, 35, "MENU", false, false, true, true);
     buttons.add(title);
-    Button debug = new Button(width - 225, height - 190, "DEBUG", false, false, true, false);
+    Button debug = new Button(width - 225, height - 190, "Show Hierarchy", false, false, true, false);
     buttons.add(debug);
 
     // sandbox menu right buttons
@@ -24,6 +24,8 @@ class HUD {
     buttons.add(child);
     Button container = new Button(width - 75, 155, "New Container", false, false, true, false);
     buttons.add(container);
+     Button clear = new Button(width - 75, 215, "Clear Shapes\nand Containers", false, false, true, false);
+    buttons.add(clear);
     //snadbox new shapes
     Button square = new Button(width - 225, 35, "Square", false, false, true, false);
     shape.buttons.add(square);
@@ -123,7 +125,7 @@ class HUD {
             switchToTitle();
           }
           break;
-        case "DEBUG":
+        case "Show Hierarchy":
           if (b.isVisible) {
             extend = "default";
             debug = !debug;
@@ -147,6 +149,10 @@ class HUD {
             extend = "default";
             sceneSandbox.drawing = true;
           }
+          break;
+        case "Clear Shapes\nand Containers":
+          sceneSandbox.shapes.clear();
+          sceneSandbox.boxes.clear();
           break;
         case "Reset\nOverrides":
           if(b.isVisible){
