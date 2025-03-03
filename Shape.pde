@@ -2,11 +2,13 @@ class Shape {
   float x, y, w, h, r, g, b, xOff = 0, yOff = 0, scale = 0;
   String shape;
   String func = "horizontal";
-  String tower = "basic";
   boolean isHovered, Clicked = false, wasClicked = false;
   boolean highlight = false;
   boolean inheritingS = true, inheritingC = true, inheritingF = true;
   float theta = 0.0;
+  
+  float range = 100, damage = 1, CD = 1;
+  
   AABB aabb;
   Shape parent;
 
@@ -30,17 +32,6 @@ class Shape {
     aabb.recalc(x, y, w, h);
     function();
 
-    //for(Shape s : sceneSandbox.shapes){
-    //  if (aabb.checkCollision(s.aabb) && s != this){
-    //    println("hitting");
-    //  }
-    //}
-
-    switch (tower) {
-    case "basic":
-
-      break;
-    }
 
     if (Mouse.onUp(Mouse.LEFT)) {
       dragging = null;
@@ -51,10 +42,6 @@ class Shape {
       dragging = this;
     }
 
-    //for (Shape s : children){
-    //  s.update();
-    //}
-
     if (selected != null) {
       if (selected == this) {
         highlight(true);
@@ -62,6 +49,13 @@ class Shape {
         highlight = false;
       }
     }
+    
+    if(sceneTD != null){
+      CD -= dt;
+      
+      
+    }
+    
   }
 
   void draw() {
@@ -406,35 +400,5 @@ class Container {
       }
     }
     return false;
-  }
-}
-
-// secret game code
-
-class Bullet {
-  float x, y, radius, angle, damage;
-  boolean isDead;
-  PVector velocity;
-  AABB aabb;
-
-
-  Bullet (float x, float y, float radius, float angle, float damage) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.angle = angle;
-    this.damage = damage;
-    aabb = new AABB(x, y, radius, radius);
-  }
-
-  void update() {
-    x += velocity.x * cos(angle) * dt;
-    y += velocity.y * sin(angle) * dt;
-  }
-
-  void draw() {
-    strokeWeight(1);
-    circle(x, y, radius);
-    strokeWeight(2);
   }
 }

@@ -10,6 +10,8 @@ class HUD {
     buttons.add(sandbox);
     Button teach = new Button(width/2 + 150, height/2, "Teach", true, true, false, false);
     buttons.add(teach);
+    Button td = new Button(width/2, height/2 + 100, "TD", true, true, false, false);
+    buttons.add(td);
     Button next = new Button(width - 100, height - 250, "Next", false, false, false, true);
     buttons.add(next);
     Button title = new Button(225, 35, "Menu", false, false, true, true);
@@ -24,7 +26,7 @@ class HUD {
     buttons.add(child);
     Button container = new Button(width - 75, 155, "New Container", false, false, true, false);
     buttons.add(container);
-     Button clear = new Button(width - 75, 215, "Clear Shapes\nand Containers", false, false, true, false);
+    Button clear = new Button(width - 75, 215, "Clear Shapes\nand Containers", false, false, true, false);
     buttons.add(clear);
     //snadbox new shapes
     Button square = new Button(width - 225, 35, "Square", false, false, true, false);
@@ -88,7 +90,7 @@ class HUD {
         } else b.isVisible = false;
       }
       if (b.sand) {
-        if (sceneSandbox != null) {
+        if (sceneSandbox != null || sceneTD != null) {
           b.isVisible = true;
         } else if (!b.sand) b.isVisible = false;
       }
@@ -111,6 +113,12 @@ class HUD {
           if (b.isVisible) {
             extend = "default";
             switchToTeach();
+          }
+          break;
+        case "TD":
+          if (b.isVisible) {
+            extend = "default";
+            switchToTD();
           }
           break;
         case "Next":
@@ -139,7 +147,9 @@ class HUD {
               s.parent = selected;
               dragging = s;
               selected.children.add(s);
-              sceneSandbox.shapes.add(s);
+              if (sceneSandbox != null) {
+                sceneSandbox.shapes.add(s);
+              } else sceneTD.shapes.add(s);
               lastAction = "New child";
             } else lastAction = "No Selected";
           }
@@ -151,15 +161,20 @@ class HUD {
           }
           break;
         case "Clear Shapes\nand Containers":
-          sceneSandbox.shapes.clear();
-          sceneSandbox.boxes.clear();
-          selected = null;
-          
+          if (sceneSandbox != null) {
+            sceneSandbox.shapes.clear();
+            sceneSandbox.boxes.clear();
+            selected = null;
+          } else {
+            sceneTD.shapes.clear();
+            sceneTD.boxes.clear();
+            selected = null;
+          }
           break;
         case "Reset\nOverrides":
-          if(b.isVisible){
+          if (b.isVisible) {
             extend = "default";
-            if(selected != null){
+            if (selected != null) {
               selected.resetOverrides();
             }
           }
@@ -186,19 +201,25 @@ class HUD {
             case "Square":
               s = new Shape(mouseX, mouseY, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
               dragging = s;
-              sceneSandbox.shapes.add(s);
+              if (sceneSandbox != null) {
+                sceneSandbox.shapes.add(s);
+              } else sceneTD.shapes.add(s);
               lastAction = "New object";
               break;
             case "Circle":
               s = new Shape(mouseX, mouseY, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
               dragging = s;
-              sceneSandbox.shapes.add(s);
+              if (sceneSandbox != null) {
+                sceneSandbox.shapes.add(s);
+              } else sceneTD.shapes.add(s);
               lastAction = "New object";
               break;
             case "Triangle":
               s = new Shape(mouseX, mouseY, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
               dragging = s;
-              sceneSandbox.shapes.add(s);
+              if (sceneSandbox != null) {
+                sceneSandbox.shapes.add(s);
+              } else sceneTD.shapes.add(s);
               lastAction = "New object";
               break;
             case "To Square":

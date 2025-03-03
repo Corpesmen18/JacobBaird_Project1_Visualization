@@ -2,6 +2,7 @@
 SceneTitle sceneTitle;
 SceneSandbox sceneSandbox;
 SceneTeach sceneTeach;
+SceneTD sceneTD;
 
 Shape selected;
 float dt;
@@ -33,6 +34,9 @@ void draw(){
   } else if (sceneTeach != null){
     sceneTeach.update();
     if (sceneTeach != null) sceneTeach.draw();
+  } else if (sceneTD != null) {
+   sceneTD.update();
+   if (sceneTD != null) sceneTD.draw();
   }
   Mouse.update();
 }
@@ -67,18 +71,28 @@ void switchToTitle() {
   sceneTitle = new SceneTitle();
   sceneSandbox = null;
   sceneTeach = null;
+  sceneTD = null;
 }
 
 void switchToSandbox(){
   sceneTitle = null;
   sceneSandbox = new SceneSandbox();
   sceneTeach = null;
+  sceneTD = null;
 }
 
 void switchToTeach(){
   sceneTitle = null;
   sceneSandbox = null;
   sceneTeach = new SceneTeach();
+  sceneTD = null;
+}
+
+void switchToTD(){
+  sceneTitle = null;
+  sceneSandbox = null;
+  sceneTeach = null;
+  sceneTD = new SceneTD();
 }
 
 void calcDeltaTime() {
