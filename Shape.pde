@@ -393,8 +393,10 @@ class Container {
 
   void draw() {
     noFill();
+    strokeWeight(5);
     stroke(0);
     rect(x - w/2, y - h/2, w, h);
+    strokeWeight(1);
   }
 
   boolean isContained(Shape s) {

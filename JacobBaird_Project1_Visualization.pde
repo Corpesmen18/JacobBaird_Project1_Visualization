@@ -9,11 +9,16 @@ float prevTime;
 boolean debug;
 String lastAction = "default";
 Shape dragging;
+PFont font;
+PFont font20;
 
 void setup() {
   size(1280, 720);
   background(128);
   switchToTitle();
+  font = loadFont("Cambria-30.vlw");
+  font20 = loadFont("Cambria-20.vlw");
+  textFont(font);
 }
 
 void draw(){

@@ -106,13 +106,16 @@ class SceneSandbox {
        case "No Parent":
          text.text = "This shape has no parent and so doesn't have any overrides to rest!";
          break;
+       case "No Selected":
+         text.text = "You need to have a shape selected make a child from!";
+         break;
     }
     
     hud.update();
   }
   
   void draw(){
-    background(128);
+    background(48);
     
     for(int i = 0; i < shapes.size(); i++){
       Shape s = shapes.get(i);

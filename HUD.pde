@@ -6,15 +6,15 @@ class HUD {
 
   HUD() {
 
-    Button sandbox = new Button(width/2 - 150, height/2, "SANDBOX", true, true, false, false);
+    Button sandbox = new Button(width/2 - 150, height/2, "Sandbox", true, true, false, false);
     buttons.add(sandbox);
-    Button teach = new Button(width/2 + 150, height/2, "TEACH", true, true, false, false);
+    Button teach = new Button(width/2 + 150, height/2, "Teach", true, true, false, false);
     buttons.add(teach);
-    Button next = new Button(width - 100, height - 250, "NEXT", false, false, false, true);
+    Button next = new Button(width - 100, height - 250, "Next", false, false, false, true);
     buttons.add(next);
-    Button title = new Button(225, 35, "MENU", false, false, true, true);
+    Button title = new Button(225, 35, "Menu", false, false, true, true);
     buttons.add(title);
-    Button debug = new Button(width - 225, height - 190, "Show Hierarchy", false, false, true, false);
+    Button debug = new Button(width - 225, height - 190, "Show\nHierarchy", false, false, true, false);
     buttons.add(debug);
 
     // sandbox menu right buttons
@@ -101,31 +101,31 @@ class HUD {
       if (b.isClicked()) {
 
         switch(b.buttonName) {
-        case "SANDBOX":
+        case "Sandbox":
           if (b.isVisible) {
             extend = "default";
             switchToSandbox();
           }
           break;
-        case "TEACH":
+        case "Teach":
           if (b.isVisible) {
             extend = "default";
             switchToTeach();
           }
           break;
-        case "NEXT":
+        case "Next":
           if (b.isVisible) {
             extend = "default";
             sceneTeach.Progress();
           }
           break;
-        case "MENU":
+        case "Menu":
           if (b.isVisible) {
             extend = "default";
             switchToTitle();
           }
           break;
-        case "Show Hierarchy":
+        case "Show\nHierarchy":
           if (b.isVisible) {
             extend = "default";
             debug = !debug;
@@ -140,8 +140,8 @@ class HUD {
               dragging = s;
               selected.children.add(s);
               sceneSandbox.shapes.add(s);
-            }
-            lastAction = "New child";
+              lastAction = "New child";
+            } else lastAction = "No Selected";
           }
           break;
         case "New Container":
@@ -153,6 +153,8 @@ class HUD {
         case "Clear Shapes\nand Containers":
           sceneSandbox.shapes.clear();
           sceneSandbox.boxes.clear();
+          selected = null;
+          
           break;
         case "Reset\nOverrides":
           if(b.isVisible){
@@ -382,6 +384,7 @@ class Button {
       fill(curColor);
       rect(x-w/2, y-h/2, w, h);
       fill(255);
+      textFont(font20);
       textAlign(CENTER, CENTER);
       textSize(18);
       text(buttonName, x, y);
@@ -418,9 +421,10 @@ class Textbox {
   void draw() {
     stroke(0);
     strokeWeight(3);
-    fill(255);
+    fill(80);
     rect(x - w/2, y - h/2, w, h);
-    fill(0);
+    fill(255);
+    textFont(font);
     textAlign(LEFT, LEFT);
     textSize(textSize);
     text(text, x - w/2 + 6, y - h/2 + 30);

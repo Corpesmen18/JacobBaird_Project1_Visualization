@@ -7,7 +7,7 @@ class SceneTitle {
   }
   
   void draw(){
-    background(128);
+    background(48);
     
     
     hud.draw();
