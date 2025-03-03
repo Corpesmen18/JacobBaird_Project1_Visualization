@@ -22,7 +22,6 @@ class SceneTD {
     b.buttons.get(2).buttonName = "Triangle\n$40";
     hud.buttons.get(7).buttonName = "New Child\n$60";
     
-    
     base = new Base(150, height/2, 100, 100);
   }
   

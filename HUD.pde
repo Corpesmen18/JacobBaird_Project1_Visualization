@@ -10,7 +10,7 @@ class HUD {
     buttons.add(sandbox);
     Button teach = new Button(width/2 + 150, height/2, "Teach", true, true, false, false);
     buttons.add(teach);
-    Button td = new Button(width/2, height/2 + 100, "TD", true, true, false, false);
+    Button td = new Button(width/2, height/2 + 100, "TD", false, false, false, false);
     buttons.add(td);
     Button next = new Button(width - 100, height - 250, "Next", false, false, false, true);
     buttons.add(next);
