@@ -147,11 +147,25 @@ class HUD {
               s.parent = selected;
               dragging = s;
               selected.children.add(s);
-              if (sceneSandbox != null) {
+              
                 sceneSandbox.shapes.add(s);
-              } else sceneTD.shapes.add(s);
+              
               lastAction = "New child";
             } else lastAction = "No Selected";
+          }
+          break;
+        case "New Child\n$60":
+          if(b.isVisible && sceneTD.money >= 60){
+            extend = "default";
+            if(selected != null){
+              s = new Shape(mouseX, mouseY, selected.w, selected.h, selected.r, selected.g, selected.b, selected.shape, selected.func);
+              s.parent = selected;
+              dragging = s;
+              selected.children.add(s);
+              sceneTD.shapes.add(s);
+              lastAction = "New child";
+              sceneTD.money -= 60;
+            }
           }
           break;
         case "New Container":
@@ -201,10 +215,16 @@ class HUD {
             case "Square":
               s = new Shape(mouseX, mouseY, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
               dragging = s;
-              if (sceneSandbox != null) {
-                sceneSandbox.shapes.add(s);
-              } else sceneTD.shapes.add(s);
+              sceneSandbox.shapes.add(s);
               lastAction = "New object";
+              break;
+            case "Square\n$40":
+              if (sceneTD.money >= 40) {
+                s = new Shape(mouseX, mouseY, 50, 50, 0, 0, 255, "SQUARE", "Horizontal");
+                dragging = s;
+                sceneTD.shapes.add(s);
+                sceneTD.money -= 40;
+              }
               break;
             case "Circle":
               s = new Shape(mouseX, mouseY, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
@@ -214,6 +234,14 @@ class HUD {
               } else sceneTD.shapes.add(s);
               lastAction = "New object";
               break;
+            case "Circle\n$40":
+              if (sceneTD.money >= 40) {
+                s = new Shape(mouseX, mouseY, 50, 50, 255, 0, 0, "CIRCLE", "Vertical");
+                dragging = s;
+                sceneTD.shapes.add(s);
+                sceneTD.money -= 40;
+              }
+              break;
             case "Triangle":
               s = new Shape(mouseX, mouseY, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
               dragging = s;
@@ -221,6 +249,14 @@ class HUD {
                 sceneSandbox.shapes.add(s);
               } else sceneTD.shapes.add(s);
               lastAction = "New object";
+              break;
+            case "Triangle\n$40":
+              if (sceneTD.money >= 40) {
+                s = new Shape(mouseX, mouseY, 50, 50, 0, 255, 0, "TRIANGLE", "Scale");
+                dragging = s;
+                sceneTD.shapes.add(s);
+                sceneTD.money -= 40;
+              }
               break;
             case "To Square":
               if (selected != null) {

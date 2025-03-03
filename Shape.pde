@@ -52,8 +52,9 @@ class Shape {
     
     if(sceneTD != null){
       CD -= dt;
-      
-      
+      if(CD <= 0){
+        attemptShoot();
+      }
     }
     
   }
@@ -89,6 +90,22 @@ class Shape {
       triangle(x - w/2 + xOff - scale, y + h/2 + yOff + scale, x + w/2 + xOff + scale, y + h/2 + yOff + scale, x + xOff, y - h/2 + yOff - scale);
       break;
     }
+  }
+
+  void attemptShoot(){
+    for (int i = 0; i < sceneTD.enemies.size(); i++){
+      Enemy e = sceneTD.enemies.get(i);
+      if (dist(x, y, e.position.x, e.position.y) <= range){
+        shoot(e);
+        break;
+      }
+    }
+  }
+  
+  void shoot(Enemy e){
+    Bullet b = new Bullet(x, y, e.position.x - x, e.position.y - y, 10, damage);
+    sceneTD.bullets.add(b);
+    CD = 1;
   }
 
   void highlight(boolean h) {

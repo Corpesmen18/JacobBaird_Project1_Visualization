@@ -16,6 +16,13 @@ class SceneTD {
   SceneTD(){
     hud.buttons.get(5).x = width - 75;
     hud.buttons.get(5).y = height - 40;
+    Button b = hud.buttons.get(6);
+    b.buttons.get(0).buttonName = "Square\n$40";
+    b.buttons.get(1).buttonName = "Circle\n$40";
+    b.buttons.get(2).buttonName = "Triangle\n$40";
+    hud.buttons.get(7).buttonName = "New Child\n$60";
+    
+    
     base = new Base(150, height/2, 100, 100);
   }
   
@@ -39,6 +46,10 @@ class SceneTD {
       s.update();
     }
     
+    for (int i = 0; i < bullets.size(); i++){
+      bullets.get(i).update();
+    }
+    
     if(dragging != null){
       dragging.x = mouseX;
       dragging.y = mouseY;
@@ -56,6 +67,9 @@ class SceneTD {
     for (int i = 0; i < shapes.size(); i++){
       Shape s = shapes.get(i);
       s.draw();
+    }
+    for (int i = 0; i < bullets.size(); i++){
+      bullets.get(i).draw();
     }
     base.draw();
     
@@ -105,28 +119,31 @@ class Enemy {
 }
 
 class Bullet {
-  float radius, angle, damage;
+  float radius, damage;
   boolean isDead;
-  PVector position, velocity;
+  PVector position = new PVector();
+  PVector velocity =  new PVector();
   AABB aabb;
 
 
-  Bullet (float x, float y, float radius, float angle, float damage) {
+  Bullet (float x, float y, float vx, float vy, float radius, float damage) {
     position.x = x;
     position.y = y;
+    velocity.x = vx;
+    velocity.y = vy;
     this.radius = radius;
-    this.angle = angle;
     this.damage = damage;
     aabb = new AABB(x, y, radius, radius);
   }
 
   void update() {
-    position.x += velocity.x * cos(angle) * dt;
-    position.y += velocity.y * sin(angle) * dt;
+    position.x += velocity.x * dt;
+    position.y += velocity.y * dt;
   }
 
   void draw() {
     strokeWeight(1);
+    stroke(0);
     circle(position.x, position.y, radius);
     strokeWeight(2);
   }
