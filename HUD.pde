@@ -6,11 +6,17 @@ class HUD {
 
   HUD() {
 
-    Button sandbox = new Button(width/2 - 150, height/2, "Sandbox", true, true, false, false);
+    Button sandbox = new Button(width/2 + 175, height/2, "Sandbox", true, true, false, false);
+    sandbox.w = 200;
+    sandbox.h = 100;
+    sandbox.textS = 30;
     buttons.add(sandbox);
-    Button teach = new Button(width/2 + 150, height/2, "Teach", true, true, false, false);
+    Button teach = new Button(width/2 - 175, height/2, "Teach", true, true, false, false);
+    teach.w = 200;
+    teach.h = 100;
+    teach.textS = 30;
     buttons.add(teach);
-    Button td = new Button(width/2, height/2 + 100, "TD", false, false, false, false);
+    Button td = new Button(width/2, height/2 + 100, "TD", true, true, false, false);
     buttons.add(td);
     Button next = new Button(width - 100, height - 250, "Next", false, false, false, true);
     buttons.add(next);
@@ -383,7 +389,7 @@ class HUD {
 }
 
 class Button {
-  float x, y, w = 125, h = 50;
+  float x, y, w = 125, h = 50, textS = 18;
   String buttonName;
   color normalColor = 25, hoveredColor = 200, pressedColor = 60;
   color curColor;
@@ -443,7 +449,7 @@ class Button {
       fill(255);
       textFont(font20);
       textAlign(CENTER, CENTER);
-      textSize(18);
+      textSize(textS);
       text(buttonName, x, y);
       stroke(0);
       //noStroke();

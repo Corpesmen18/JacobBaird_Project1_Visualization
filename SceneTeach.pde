@@ -51,8 +51,9 @@ class SceneTeach {
       shapes.add(sh);
       sh = new Shape(width/2 + 100, height/2, 50, 50, 0, 0, 255, "TRIANGLE", "Scale");
       shapes.add(sh);
-      textbox.text = "These properties and functions can change between different versions of the same object. \nAll of these shapes are objects form the same class" +
-        " but they possess different properties. \nInheritance and Polymorphism builds upon the diverse possibilities of objects by making it \nmore convenient to utilize.";
+      textbox.text = "These properties and functions can change between different versions of the same object. \nAll of these shapes are different objects" +
+        " and they possess different properties. Inheritance \nand Polymorphism builds upon the diverse possibilities of objects by making it more \nconvenient to utilize" + 
+        " on a large scale.";
       break;
     case 3:
       debug = true;
