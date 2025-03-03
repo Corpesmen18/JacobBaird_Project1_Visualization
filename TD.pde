@@ -118,21 +118,27 @@ class Enemy {
 }
 
 class Bullet {
-  float radius, damage;
+  float radius, damage, speed = 5;
   boolean isDead;
   PVector position = new PVector();
   PVector velocity =  new PVector();
   AABB aabb;
 
 
-  Bullet (float x, float y, float vx, float vy, float radius, float damage) {
+  Bullet (float x, float y, float vx, float vy, float radius, float damage, float s) {
     position.x = x;
     position.y = y;
     velocity.x = vx;
     velocity.y = vy;
+    speed = s;
     this.radius = radius;
     this.damage = damage;
     aabb = new AABB(x, y, radius, radius);
+    float mag = sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+    if (mag != 0) {
+      vx = (velocity.x / mag) * speed;
+      vy = (velocity.y / mag) * speed;
+    }
   }
 
   void update() {

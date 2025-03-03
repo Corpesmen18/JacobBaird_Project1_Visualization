@@ -7,7 +7,7 @@ class Shape {
   boolean inheritingS = true, inheritingC = true, inheritingF = true;
   float theta = 0.0;
   
-  float range = 100, damage = 1, CD = 1;
+  float range = 100, damage = 1, CD = 1, speed = 20;
   
   AABB aabb;
   Shape parent;
@@ -103,7 +103,7 @@ class Shape {
   }
   
   void shoot(Enemy e){
-    Bullet b = new Bullet(x, y, e.position.x - x, e.position.y - y, 10, damage);
+    Bullet b = new Bullet(x, y, e.position.x - x, e.position.y - y, 10, damage, speed);
     sceneTD.bullets.add(b);
     CD = 1;
   }
